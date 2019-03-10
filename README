@@ -1,0 +1,62 @@
+This is a configurable tool that can be used to give metadata to folders.
+
+It works by using a Argument Configurable Parser (ACP).
+
+The code was only test under Linux system.
+
+usage: search.py [-h] file [OPTIONS]
+
+Will use the file : <config_path>/file.conf as configuration file
+The folders will contain a data.file file
+
+Each line of the configuration file should be:
+<TAG NAME> <--parser argument> <y|n> [#<commentary>]
+The parameter <y|n> is used to determine if argument can be use to find tags
+
+# Pre-defined arguments
+    --new : create a new file following the configuration file
+    --show <id> : show content of file id in your favorite text editor
+    --history : show previous result
+
+It is possible to put multiple kind of data.file file per folder
+
+# Exemple for CTF database:
+configuration file ctf.conf:
+    [TITLE] --title y #To find words in title
+    [WEBSITE] --website y #To find websites
+    [CATEGORY] --category y #To find categories
+    [POINTS] --points y #To filter by number of points
+    [TAGS] --tags y #To filter additionnal tags
+    [TOOLS] --tools y #To filter with tool used
+    [FLAG] --flag n
+    [SOLUTION] --solution n
+usage: search.py [-h] [--new] [--history] [--show SHOW]
+                 [--title TITLE [TITLE ...]] [--website WEBSITE [WEBSITE ...]]
+                 [--category CATEGORY [CATEGORY ...]]
+                 [--points POINTS [POINTS ...]] [--tags TAGS [TAGS ...]]
+                 [--tools TOOLS [TOOLS ...]] [--flag] [--solution]
+                 ctf
+
+positional arguments:
+  ctf                   Set ctf to use configuration file
+                        /home/sinople/.search/ctf.conf
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --new                 Create new structured file
+  --history             Show result of previous research
+  --show SHOW           Show the content of the file with corresponding id
+  --title TITLE [TITLE ...]
+                        To find words in title
+  --website WEBSITE [WEBSITE ...]
+                        To find websites
+  --category CATEGORY [CATEGORY ...]
+                        To find categories
+  --points POINTS [POINTS ...]
+                        To filter by number of points
+  --tags TAGS [TAGS ...]
+                        To filter additionnal tags
+  --tools TOOLS [TOOLS ...]
+                        To filter with tool used
+  --flag
+  --solution
