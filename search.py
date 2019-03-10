@@ -15,7 +15,6 @@ class Search:
         # set up attributes
         self.cmd = ' '.join(cmd)
         self.conf_dir = config['conf_dir']
-        print(self.conf_dir)
         self.conf_file = self.conf_type + '.conf'
         self.conf_file_name = os.path.join(self.conf_dir, self.conf_file)
         if not os.path.isfile(self.conf_file_name):
@@ -58,14 +57,11 @@ class Search:
         parse = split[2]
         commentary = ' '.join(split[3:])[1:]
         if title in self.list_of_title:
-            #print('[ERROR line %d] title %s was already set' %(i, arg),  file=sys.stderr)
             raise Exception('[ERROR line %d] title %s was already set' %(i, arg))
         self.list_of_title += [title]
         if arg == '--show':
-            #print('[ERROR line %d] --show cannot be put as argument' %i,  file=sys.stderr)
             raise Exception('[ERROR line %d] --show cannot be put as argument' %i)
         if arg in self.list_of_arg:
-            #print('[ERROR line %d] arg %s was already set' %(i, arg),  file=sys.stderr)
             raise Exception('[ERROR line %d] arg %s was already set' %(i, arg))
         self.list_of_arg += [arg]
         if parse == 'y':
@@ -104,9 +100,7 @@ class Search:
     def new_file(self):
         file_name = self.file_data
         if os.path.isfile(file_name):
-            #print('The file %s already exists' % file_name, file=sys.stderr)
             raise Exception('The file %s already exists' % file_name)
-            #exit(1)
         f = open(file_name, 'w')
         for title in self.list_of_title:
             f.write(title)
@@ -124,9 +118,7 @@ class Search:
                     file_name = os.path.expanduser(file_name[0])
                     os.system('%s %s' % (self.editor, file_name))
                     exit(0)
-        #print('[ERROR] The id %d does not exists'%research_id, file=sys.stderr)
         raise Exception('[ERROR] The id %d does not exists'%research_id)
-        #exit(1)
 
     def search(self):
         if self.tag_arg_list is []:
@@ -177,9 +169,7 @@ class Search:
                 print(open(self.history_file).read())
                 exit(0)
             else:
-                #print('[INFO] No previous research', file=sys.stderr)
                 raise Exception('[INFO] No previous research')
-                #exit(1)
         if self.args.show is not None:
             self.show_file(self.args.show)
         self.search()
