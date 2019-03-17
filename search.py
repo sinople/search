@@ -41,7 +41,7 @@ class Search:
         return arg.file
 
 
-    def generate_parser_argument(self, line):
+    def generate_parser_argument(self, line, line_nb):
         l = line.strip()
         regex = '^[\[\]\w]+[ ]+'
         regex += '[-]{1,2}[\w]+[ ]+'
@@ -49,7 +49,7 @@ class Search:
         regex += '(#.*){0,1}$'
         if re.match(regex, l) is None:
             if l is not '':
-                raise Exception('[ERROR line %d] line should be : <TITLE> -[-]<search name> <parse:y/n>  #<commentary> or empty' %i)
+                raise Exception('[ERROR line %d] line should be : <TITLE> -[-]<search name> <parse:y/n>  #<commentary> or empty' %line_nb)
             return
         split = re.split(r'[ ]+', l)
         title = split[0]
@@ -57,12 +57,12 @@ class Search:
         parse = split[2]
         commentary = ' '.join(split[3:])[1:]
         if title in self.list_of_title:
-            raise Exception('[ERROR line %d] title %s was already set' %(i, arg))
+            raise Exception('[ERROR line %d] title %s was already set' %(line_nb, arg))
         self.list_of_title += [title]
         if arg == '--show':
-            raise Exception('[ERROR line %d] --show cannot be put as argument' %i)
+            raise Exception('[ERROR line %d] --show cannot be put as argument' %line_nb)
         if arg in self.list_of_arg:
-            raise Exception('[ERROR line %d] arg %s was already set' %(i, arg))
+            raise Exception('[ERROR line %d] arg %s was already set' %(line_nb, arg))
         self.list_of_arg += [arg]
         if parse == 'y':
             self.parser.add_argument(arg, nargs='+', default=None, help=commentary)
@@ -94,8 +94,8 @@ class Search:
                 help='Show result of previous research')
         self.parser.add_argument('--show' , type=int,
                 help='Show the content of the file with corresponding id')
-        for i, line in enumerate(conf):
-            self.generate_parser_argument(line)
+        for line_nb, line in enumerate(conf):
+            self.generate_parser_argument(line, line_nb)
 
     def new_file(self):
         file_name = self.file_data
