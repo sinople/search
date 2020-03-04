@@ -48,7 +48,7 @@ class Search:
         regex += '[y|n][ ]*'
         regex += '(#.*){0,1}$'
         if re.match(regex, l) is None:
-            if l is not '':
+            if l != '':
                 raise Exception('[ERROR line %d] line should be : <TITLE> -[-]<search name> <parse:y/n>  #<commentary> or empty' %line_nb)
             return
         split = re.split(r'[ ]+', l)
